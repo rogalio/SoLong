@@ -14,15 +14,15 @@ NAME = so_long
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I./minilibx -g
-LFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
-MLX = ./mlx_linux/libmlx.a
+LFLAGS = -L./mlx_mac -lmlx -framework OpenGL -framework AppKit
+MLX = ./mlx_mac/libmlx.a
 SRCS = so_long.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(MLX) $(NAME)
 
 $(MLX) :
-	make -sC ./mlx_linux
+	make -sC ./mlx_mac
 
 $(NAME) : $(OBJS)
 	$(CC) $(OBJS) $(LFLAGS) -o $(NAME)
@@ -35,7 +35,7 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME)
-	make clean -C ./mlx_linux
+	make clean -C ./mlx_mac
 
 re : fclean all
 
