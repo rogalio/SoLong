@@ -18,5 +18,8 @@ void handle_error(int error_code) {
         case ERROR_READ_FILE:
             printf("\nError\n: Could not read file.\n\n");
             break;
+        case ERROR_LOAD_TEXTURE:
+            printf("\nError\n: Could not load texture.\n\n");
+            break;
     }
 }
