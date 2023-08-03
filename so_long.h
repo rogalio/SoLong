@@ -18,9 +18,11 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <stddef.h>
 
 
 # include "./mlx_linux/mlx.h"
+
 
 # define WINDOW_WIDTH 640
 # define WINDOW_HEIGHT 640
@@ -30,9 +32,14 @@
 # define NUM_TEXTURES 3
 # define TILE_SIZE 64
 
-# define MAP_WIDTH 10
-# define MAP_HEIGHT 10
-# define MAP_SIZE (MAP_WIDTH * MAP_HEIGHT)
+# define MAP_WIDTH 11
+# define MAP_HEIGHT 11
+
+# define ERROR_ARG 1
+# define ERROR_FILE 2
+# define ERROR_ALLOC_TILE 3
+# define ERROR_LOAD_TILE 4
+# define ERROR_READ_FILE 5
 
 typedef struct s_texture
 {
@@ -51,21 +58,34 @@ typedef struct s_window
      t_texture   texture[NUM_TEXTURES];
 }               t_window;
 
-typedef struct s_map
+typedef struct  s_map
 {
-    int tiles[MAP_SIZE];
+    int *tiles;
+    int width;
+    int height;
 }               t_map;
 
 
+//error
+void handle_error(int error_code);
 
+//event
+int close_window(t_window *data, t_map *map);
+int handle_key_press(int keycode, t_window *data, t_map *map);
+int handle_key_release(int keycode, t_window *data, t_map *map);
 
+//map utils
+int get_tile_index(t_map *map, int x, int y);
+int load_map(char *filename, t_map *map);
+void draw_map(t_window *data, t_map *map);
 
-
+//texture utils
+int load_texture(void *mlx_ptr, char *file, t_texture *tex);
+int load_all_textures(t_window *data, char **files, int num_textures);
+void draw_texture(t_window *data, int texture_index, int x, int y);
 
 #endif
 
-
-/// a faire
 
 
 
