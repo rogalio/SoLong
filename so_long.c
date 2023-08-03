@@ -1,27 +1,15 @@
 #include "so_long.h"
 
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 600
-# define MLX_ERROR 1
-# define NUM_TEXTURES 2
-
-typedef struct s_texture
+/**
+ * get_tile_index - Returns the index of a tile in the map array.
+ * @x: X coordinate of the tile.
+ * @y: Y coordinate of the tile.
+ * Return: The index of the tile in the map array.
+ */
+int get_tile_index(int x, int y)
 {
-    void    *img;
-    char    *addr;
-    int     width;
-    int     line_length;
-    int     bits_per_pixel;
-    int     endian;
-}               t_texture;
-
-typedef struct s_window
-{
-    void    *mlx;
-    void    *win;
-     t_texture   texture[NUM_TEXTURES];
-}               t_window;
-
+    return y * MAP_WIDTH + x;
+}
 
 /**
  * load_texture - Loads an image from a file and stores it in a texture structure,
@@ -71,10 +59,35 @@ void draw_texture(t_window *data, int texture_index, int x, int y)
     mlx_put_image_to_window(data->mlx, data->win, data->texture[texture_index].img, x, y);
 }
 
+/**
+ * draw_map - Draws the map to the screen.
+ */
+void draw_map(t_window *data, t_map *map)
+{
+    int x;
+    int y;
+    int tile_index;
+    int texture_index;
+
+    y = 0;
+    while (y < MAP_HEIGHT)
+    {
+        x = 0;
+        while (x < MAP_WIDTH)
+        {
+            tile_index = get_tile_index(x, y);
+            texture_index = map->tiles[tile_index];
+            draw_texture(data, texture_index, x * TILE_SIZE, y * TILE_SIZE);
+            x++;
+        }
+        y++;
+    }
+}
+
 int main()
 {
     t_window data;
-    char *files[NUM_TEXTURES] = {"tiles/greystone.xpm", "tiles/bluestone.xpm"};
+    char *files[NUM_TEXTURES] = {"tiles/greystone.xpm", "tiles/bluestone.xpm", "tiles/mossy.xpm"};
 
     // Initialize the minilibX.
     data.mlx = mlx_init();
@@ -90,10 +103,22 @@ int main()
     if (load_all_textures(&data, files, NUM_TEXTURES) != 0)
         return (MLX_ERROR);
 
-
-    // Draw the texture at (100, 100).
-    draw_texture(&data, 0, 100, 100);
-    draw_texture(&data, 1, 200, 200);
+    // Draw textures.
+    t_map map = {
+        .tiles = {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1, 2, 2, 2, 2, 2, 2, 2, 2, 1,
+            1, 2, 0, 0, 0, 0, 0, 0, 2, 1,
+            1, 2, 0, 0, 0, 0, 0, 0, 2, 1,
+            1, 2, 0, 0, 0, 0, 0, 0, 2, 1,
+            1, 2, 0, 0, 0, 0, 0, 0, 2, 1,
+            1, 2, 0, 0, 0, 0, 0, 0, 2, 1,
+            1, 2, 0, 0, 0, 0, 0, 0, 2, 1,
+            1, 2, 2, 2, 2, 2, 2, 2, 2, 1,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        }
+    };
+    draw_map(&data, &map);
 
     // Start the minilibX loop.
     mlx_loop(data.mlx);
