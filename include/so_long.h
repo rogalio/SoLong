@@ -7,7 +7,8 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stddef.h>
-#include "./mlx_linux/mlx.h"
+#include <string.h>
+#include "../mlx_mac/mlx.h"
 #include <stdarg.h>
 
 # define WINDOW_WIDTH 640
@@ -18,7 +19,6 @@
 # define TILE_SIZE 64
 # define MAP_WIDTH 11
 # define MAP_HEIGHT 11
-
 
 
 # define ERROR_ARG 1
@@ -117,16 +117,15 @@ int load_map(char *filename, t_game *game);
 int draw_map(t_game *game);
 
 //game
-void init_game_elements(t_game *game);
-int load_game_textures(t_game *game, char **files);
+int init_game(t_game *game, char **av, int ac, char **files);
+int load_game_map(t_game *game, char *map_path);
 
 //texture utils
 int load_texture(void *mlx_ptr, char *file, t_texture *tex);
 int load_all_textures(t_game *game, char **files, int num_files);
+int load_game_textures(t_game *game, char **files);
 void draw_element(t_window *data, t_texture *texture, int x, int y);
 void draw_player(t_game *game);
 
-//entity utils
-void init_game_elements(t_game *game);
 
 #endif

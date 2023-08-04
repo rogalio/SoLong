@@ -1,4 +1,4 @@
-#include "so_long.h"
+#include "../include/so_long.h"
 
 t_error *get_errors(void)
 {
@@ -12,7 +12,7 @@ t_error *get_errors(void)
         {ERROR_MAP, "\nError\nCould not load map."},
         {ERROR_TEXTURE, "\nError\nCould not load textures."},
         {ERROR_OPEN, "\nError\nCould not open file: "},
-        {0, NULL},  
+        {0, ""}
     };
     return (errors);
 }

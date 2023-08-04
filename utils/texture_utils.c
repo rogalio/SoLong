@@ -1,4 +1,5 @@
-#include "so_long.h"
+#include "../include/so_long.h"
+
 
 int load_texture(void *mlx_ptr, char *file, t_texture *tex)
 {
