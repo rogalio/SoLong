@@ -3,10 +3,7 @@
 int check_args(int ac)
 {
     if (ac != 2)
-    {
-        handle_error(ERROR_ARG);
-        return (1);
-    }
+        return (handle_error(ERROR_ARG));
     return (0);
 }
 

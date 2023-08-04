@@ -1,11 +1,9 @@
 #include "so_long.h"
 
-
 int load_game_map(t_game *game, char *map_path)
 {
     if (load_map(map_path, game) != 0)
         return (1);
-    printf("Map loaded.\n");
     return (0);
 }
 
@@ -22,8 +20,6 @@ int init_game(t_game *game, char **av, int ac, char **files)
         return (1);
     return (0);
 }
-
-
 
 int main(int ac, char **av)
 {

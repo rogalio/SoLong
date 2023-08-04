@@ -1,25 +1,41 @@
 #include "so_long.h"
 
+t_error *get_errors(void)
+{
+    static t_error errors[] = {
+        {ERROR_ARG, "\nError\nWrong number of arguments.\nUsage: ./so_long <map.ber>"},
+        {ERROR_FILE, "\nError\nCould not open file."},
+        {ERROR_ALLOC, "\nError\nCould not allocate memory."},
+        {ERROR_LOAD, "\nError\nCould not load."},
+        {ERROR_READ, "\nError\nCould not read file."},
+        {ERROR_INIT, "\nError\nCould not initialize window."},
+        {ERROR_MAP, "\nError\nCould not load map."},
+        {ERROR_TEXTURE, "\nError\nCould not load textures."},
+        {ERROR_OPEN, "\nError\nCould not open file: "},
+        {0, NULL},  
+    };
+    return (errors);
+}
 
-void handle_error(int error_code) {
-    switch(error_code) {
-        case ERROR_ARG:
-            printf("\nError\n: Incorrect number of arguments.\n\n");
+int handle_error(int error_code, ...) {
+    va_list args;
+    t_error *errors;
+    int i;
+
+    errors = get_errors();
+    i = 0;
+    while (errors[i].code != 0)
+    {
+        if (errors[i].code == error_code)
+        {
+            printf("%s\n", errors[i].message);
             break;
-        case ERROR_FILE:
-            printf("\nError\n: Could not open file.\n\n");
-            break;
-        case ERROR_ALLOC_TILE:
-            printf("\nError\n: Could not allocate memory for tiles.\n\n");
-            break;
-        case ERROR_LOAD_TILE:
-            printf("\nError\n: Could not load tile.\n\n");
-            break;
-        case ERROR_READ_FILE:
-            printf("\nError\n: Could not read file.\n\n");
-            break;
-        case ERROR_LOAD_TEXTURE:
-            printf("\nError\n: Could not load texture.\n\n");
-            break;
+        }
+        i++;
     }
+    va_start(args, error_code);
+    if (error_code == ERROR_ARG)
+        printf("%s\n", va_arg(args, char *));
+    va_end(args);
+    return (1);
 }

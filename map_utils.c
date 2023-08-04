@@ -6,10 +6,7 @@ int open_map(char *filename)
 
     fd = open(filename, O_RDONLY);
     if (fd == -1)
-    {
-        handle_error(ERROR_FILE);
-        return (-1);
-    }
+        return (handle_error(ERROR_OPEN, filename));
     return (fd);
 }
 
@@ -19,10 +16,7 @@ int init_map(t_map *map, int width, int height)
     map->height = height;
     map->tiles = malloc(sizeof(int) * width * height);
     if (!map->tiles)
-    {
-        handle_error(ERROR_ALLOC_TILE);
-        return (1);
-    }
+        return(handle_error(ERROR_ALLOC,"tiles\nfn : init_map"));
     return (0);
 }
 
@@ -43,7 +37,7 @@ int read_map(int fd, t_map *map)
 
     if (ret == -1)
     {
-        handle_error(ERROR_READ_FILE);
+        handle_error(ERROR_READ, fd);
         free(map->tiles);
         return (1);
     }
@@ -61,13 +55,11 @@ int load_map(char *filename,t_game *game)
     if (init_map(&game->map, MAP_WIDTH, MAP_HEIGHT) != 0)
     {
         close(fd);
-        handle_error(ERROR_INIT_MAP);
         return (1);
-    }
+    } 
     if (read_map(fd, &game->map) != 0)
     {
         close(fd);
-        handle_error(ERROR_READ_MAP);
         return (1);
     }
     close(fd);

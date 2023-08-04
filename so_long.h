@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <stddef.h>
 #include "./mlx_linux/mlx.h"
+#include <stdarg.h>
 
 # define WINDOW_WIDTH 640
 # define WINDOW_HEIGHT 640
@@ -22,14 +23,13 @@
 
 # define ERROR_ARG 1
 # define ERROR_FILE 2
-# define ERROR_ALLOC_TILE 3
-# define ERROR_LOAD_TILE 4
-# define ERROR_READ_FILE 5
-# define ERROR_LOAD_TEXTURE 6
-# define ERROR_INIT_MAP 7
-# define ERROR_READ_MAP 8
-# define ERROR_MAP 9
-# define ERROR_TEXTURE 10
+# define ERROR_ALLOC 3
+# define ERROR_LOAD 4
+# define ERROR_READ 5
+# define ERROR_INIT 6
+# define ERROR_MAP 7
+# define ERROR_TEXTURE 8
+# define ERROR_OPEN 9
 
 
 typedef struct s_texture
@@ -73,6 +73,12 @@ typedef struct s_entity
     t_texture   texture;
 }               t_entity;
 
+typedef struct s_error
+{
+    int code;
+    char *message;
+}               t_error;
+
 typedef struct s_game
 {
     t_window    window;
@@ -82,8 +88,17 @@ typedef struct s_game
     t_entity    exit;
 }               t_game;
 
+typedef struct s_event
+{
+    int (*func)(int, t_game *);
+    int keycode;
+}               t_event;
+
+
+
+
 //error
-void handle_error(int error_code);
+int handle_error(int code, ...);
 
 //utils
 int check_args(int ac);
