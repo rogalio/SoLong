@@ -1,39 +1,37 @@
 #include "so_long.h"
 
-int get_tile_index(t_map *map, int x, int y)
-{
-    return (y * map->width + x);
-}
-
-/*
-int load_map(char *filename, t_map *map)
+int open_map(char *filename)
 {
     int fd;
-    char c;
-    int tile_index;
-    ssize_t ret;
 
     fd = open(filename, O_RDONLY);
     if (fd == -1)
     {
         handle_error(ERROR_FILE);
-        return (1);
+        return (-1);
     }
+    return (fd);
+}
 
-    // Initialiser les dimensions de la carte. 
-    map->width = MAP_WIDTH;
-    map->height = MAP_HEIGHT;
-
-    // Allouer de la mémoire pour le tableau de tuiles.
-    map->tiles = (int *)malloc(sizeof(int) * map->width * map->height);
+int init_map(t_map *map, int width, int height)
+{
+    map->width = width;
+    map->height = height;
+    map->tiles = malloc(sizeof(int) * width * height);
     if (!map->tiles)
     {
         handle_error(ERROR_ALLOC_TILE);
-        close(fd);
         return (1);
     }
+    return (0);
+}
 
-    tile_index = 0;
+int read_map(int fd, t_map *map)
+{
+    char c;
+    int tile_index = 0;
+    ssize_t ret;
+
     while ((ret = read(fd, &c, 1)) > 0)
     {
         if (c == '\n') continue; // Ignore newline characters.
@@ -47,81 +45,52 @@ int load_map(char *filename, t_map *map)
     {
         handle_error(ERROR_READ_FILE);
         free(map->tiles);
-        close(fd);
         return (1);
     }
 
-    close(fd);
     return (0);
 }
-*/
 
-
-int load_map(char *filename, t_map *map)
+int load_map(char *filename,t_game *game)
 {
     int fd;
-    char c;
-    int tile_index;
-    ssize_t ret;
 
-    fd = open(filename, O_RDONLY);
+    fd = open_map(filename);
     if (fd == -1)
-    {
-        handle_error(ERROR_FILE);
         return (1);
-    }
-
-    // Initialiser les dimensions de la carte. 
-    map->width = MAP_WIDTH;
-    map->height = MAP_HEIGHT;
-
-    // Allouer de la mémoire pour le tableau de tuiles.
-    map->tiles = (int *)malloc(sizeof(int) * map->width * map->height);
-    if (!map->tiles)
+    if (init_map(&game->map, MAP_WIDTH, MAP_HEIGHT) != 0)
     {
-        handle_error(ERROR_ALLOC_TILE);
         close(fd);
+        handle_error(ERROR_INIT_MAP);
         return (1);
     }
-
-    tile_index = 0;
-    while ((ret = read(fd, &c, 1)) > 0)
+    if (read_map(fd, &game->map) != 0)
     {
-        if (c == '\n') continue; // Ignore newline characters.
-
-        // Convert character to integer and add to the map.
-        map->tiles[tile_index] = c - '0';
-        tile_index++;
-    }
-
-    if (ret == -1)
-    {
-        handle_error(ERROR_READ_FILE);
-        free(map->tiles);
         close(fd);
+        handle_error(ERROR_READ_MAP);
         return (1);
     }
-
     close(fd);
     return (0);
 }
 
-void draw_map(t_window *data, t_map *map, t_player *player, t_item *item)
+int draw_map(t_game *game)
 {
     int x;
     int y;
+    int tile_index;
 
     y = 0;
-    while (y < map->height)
+    while (y < game->map.height)
     {
         x = 0;
-        while (x < map->width)
+        while (x < game->map.width)
         {
-            draw_tile(data, map, x, y);
+            tile_index = get_tile_index(&game->map, x, y);
+            draw_element(&game->window, &game->window.texture[game->map.tiles[tile_index]], x, y);
             x++;
         }
         y++;
     }
-    draw_player(data, player);
-    draw_item(data, item);
+    return (0);
 }

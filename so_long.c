@@ -1,69 +1,51 @@
 #include "so_long.h"
 
-// init player
-void init_player(t_player *player, void *mlx_ptr, char *file, int init_x, int init_y)
+
+int load_game_map(t_game *game, char *map_path)
 {
-    player->x = init_x;
-    player->y = init_y;
-    load_texture(mlx_ptr, file, &(player->texture));
+    if (load_map(map_path, game) != 0)
+        return (1);
+    printf("Map loaded.\n");
+    return (0);
 }
 
-// init item
-void init_item(t_item *item, void *mlx_ptr, char *file, int init_x, int init_y)
+int init_game(t_game *game, char **av, int ac, char **files)
 {
-    item->x = init_x;
-    item->y = init_y;
-    item->collected = 0;
-    load_texture(mlx_ptr, file, &(item->texture));
+    if (check_args(ac) != 0)
+        return (1);
+    init_window(game, WINDOW_WIDTH, WINDOW_HEIGHT , "so_long");
+    if (load_game_map(game, av[1]) != 0)
+        return (1);
+    if (load_game_textures(game, files) != 0)
+        return (1);
+    if (draw_map(game) != 0)
+        return (1);
+    return (0);
 }
+
+
 
 int main(int ac, char **av)
 {
-    t_window data;
-    char *files[NUM_TEXTURES] = {"tiles/greystone.xpm", "tiles/empty.xpm", "tiles/mossy.xpm", "tiles/player.xpm", "tiles/item.xpm"};
-    t_map map;
-    t_player player;
-    t_item item;
-
-    // Check for correct number of arguments.
-    if (ac != 2)
+    t_game game;
+    char *files[NUM_TEXTURES] =
     {
-        handle_error(ERROR_ARG);
-        return (ERROR_ARG);
-    }
+        "tiles/greystone.xpm",
+        "tiles/empty.xpm", 
+        "tiles/mossy.xpm", 
+        "tiles/player.xpm", 
+        "tiles/item.xpm"
+    };
 
-    // Initialize the minilibX.
-    data.mlx = mlx_init();
-    if (!data.mlx)
-        return (MLX_ERROR);
+    // Initialise the game.
+    if (init_game(&game, av, ac, files) != 0)
+        return (1);
+    
+    // Setup the hooks.
+    setup_hooks(&game);
 
-    // Create a new window.
-    data.win = mlx_new_window(data.mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "so_long");
-    if (!data.win)
-        return (MLX_ERROR);
-
-    // Load textures.
-    if (load_all_textures(&data, files, NUM_TEXTURES) != 0)
-        return (MLX_ERROR);
-
-    // Load map.
-    if (load_map(av[1], &map) != 0)
-        return (MLX_ERROR);
-
-    // Initialize player.
-    init_player(&player, data.mlx, "tiles/player.xpm", 100, 200);
-
-    // Initialize item.
-    init_item(&item, data.mlx, "tiles/item.xpm", 200, 300);
- 
-    // Draw map.
-    draw_map(&data, &map, &player, &item);
-
-    // Set up the hook functions.
-    mlx_hook(data.win, 17, 0, close_window, &data);
-
-    // Start the minilibX loop.
-    mlx_loop(data.mlx);
-
+    // Start the game loop.
+    mlx_loop(game.window.mlx);
     return (0);
+
 }

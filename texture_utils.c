@@ -12,45 +12,33 @@ int load_texture(void *mlx_ptr, char *file, t_texture *tex)
     return (0);
 }
 
-int load_all_textures(t_window *data, char **files, int num_textures)
+int load_all_textures(t_game *game, char **files, int num_files)
 {
     int i;
 
     i = 0;
-    while (i < num_textures)
+    while (i < num_files)
     {
-        if (load_texture(data->mlx, files[i], &(data->texture[i])) != 0)
-        {
-            handle_error(ERROR_LOAD_TEXTURE);
-            return (MLX_ERROR);
-        }    
+        if (load_texture(game->window.mlx, files[i], &(game->window.texture[i])) != 0)
+            return (1);
         i++;
     }
     return (0);
 }
 
 
-
-void draw_texture(t_window *data, t_texture *texture, int x, int y)
+int load_game_textures(t_game *game, char **files)
 {
-    mlx_put_image_to_window(data->mlx, data->win, texture->img, x, y);
+    if (load_all_textures(game, files, NUM_TEXTURES) != 0)
+        return (1);
+    printf("Textures loaded.\n");
+    return (0);
 }
 
-void draw_tile(t_window *data, t_map *map, int x, int y)
+// Dessine une texture à une position donnée
+void draw_element(t_window *data, t_texture *texture, int x, int y)
 {
-    int tile_index;
-
-    tile_index = get_tile_index(map, x, y);
-    draw_texture(data, &(data->texture[map->tiles[tile_index]]), x * TILE_SIZE, y * TILE_SIZE);
+    mlx_put_image_to_window(data->mlx, data->win, texture->img, x * TILE_SIZE, y * TILE_SIZE);
 }
 
-void draw_player(t_window *data, t_player *player)
-{
-    draw_texture(data, &(player->texture), player->x, player->y);
-}
 
-void draw_item(t_window *data, t_item *item)
-{
-    if (!item->collected)
-        draw_texture(data, &(item->texture), item->x, item->y);
-}
