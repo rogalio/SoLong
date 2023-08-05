@@ -8,7 +8,7 @@
 #include <errno.h>
 #include <stddef.h>
 #include <string.h>
-#include "../mlx_mac/mlx.h"
+#include "../mlx_linux/mlx.h"
 #include <stdarg.h>
 
 # define WINDOW_WIDTH 640
