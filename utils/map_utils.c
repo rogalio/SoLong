@@ -20,6 +20,8 @@ int init_map(t_map *map, int width, int height)
     return (0);
 }
 
+
+
 int read_map(int fd, t_map *map)
 {
     char c;
@@ -30,20 +32,23 @@ int read_map(int fd, t_map *map)
     {
         if (c == '\n') continue; // Ignore newline characters.
 
-        // Convert character to integer and add to the map.
-        map->tiles[tile_index] = c - '0';
-        tile_index++;
+        // Convert character to t_tile and add to the map.
+        if (c >= '0' && c <= '4') {
+            map->tiles[tile_index] = (t_tile)(c - '0');
+            tile_index++;
+        }
+        else 
+            return (handle_error(ERROR_MAP, "Invalid character in map"));
     }
-
     if (ret == -1)
     {
         handle_error(ERROR_READ, fd);
         free(map->tiles);
         return (1);
     }
-
     return (0);
 }
+
 
 int load_map(char *filename,t_game *game)
 {
@@ -66,6 +71,8 @@ int load_map(char *filename,t_game *game)
     return (0);
 }
 
+//  Créer une fonction pour stocker la carte dans une structure de données.
+
 int draw_map(t_game *game)
 {
     int x;
@@ -79,10 +86,17 @@ int draw_map(t_game *game)
         while (x < game->map.width)
         {
             tile_index = get_tile_index(&game->map, x, y);
-            draw_element(&game->window, &game->window.texture[game->map.tiles[tile_index]], x, y);
+
+            draw_texture(&game->window, &game->window.texture[game->map.tiles[tile_index]], x, y);
+            printf("%d", game->map.tiles[tile_index]);
             x++;
         }
+        printf("\n");
         y++;
     }
+    
     return (0);
 }
+
+
+

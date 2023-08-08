@@ -1,7 +1,5 @@
 #include "../include/so_long.h"
 
-
-
 int check_args(int ac)
 {
     if (ac != 2)
@@ -12,6 +10,7 @@ int check_args(int ac)
 void setup_hooks(t_game *game)
 {
     mlx_hook(game->window.win, 17, 0, close_window, game);
+    mlx_key_hook(game->window.win, handle_key_press, game);
 }
 
 int get_tile_index(t_map *map, int x, int y)

@@ -32,6 +32,8 @@
 # define ERROR_OPEN 9
 
 
+
+
 typedef struct s_texture
 {
     void    *img;
@@ -44,8 +46,8 @@ typedef struct s_texture
 
 typedef enum e_tile
 {
-    TILE_EMPTY,
     TILE_WALL,
+    TILE_EMPTY,
     TILE_ITEM,
     TILE_EXIT,
     TILE_PLAYER
@@ -62,7 +64,7 @@ typedef struct s_map
 {
     int width;
     int height;
-    int *tiles;
+    t_tile *tiles;
 }               t_map;
 
 typedef struct s_entity
@@ -108,24 +110,35 @@ void init_window(t_game *game, int width, int height, char *title);
 
 //event
 int close_window(t_window *data, t_map *map);
+int move_player(t_game *game, int dx, int dy) ;
+int move_up(t_game *game);
+int move_down(t_game *game);
+int move_left(t_game *game);
+int move_right(t_game *game);
 int handle_key_press(int keycode, t_game *game);
-int handle_key_release(int keycode, t_game *game);
+int check_all_items_gathered(t_game *game);
+
+int check_collision(t_game *game, int new_x, int new_y);
 
 //map utils
 int get_tile_index(t_map *map, int x, int y);
 int load_map(char *filename, t_game *game);
 int draw_map(t_game *game);
 
+//
+
 //game
+int init_player(t_game *game);
 int init_game(t_game *game, char **av, int ac, char **files);
 int load_game_map(t_game *game, char *map_path);
+
 
 //texture utils
 int load_texture(void *mlx_ptr, char *file, t_texture *tex);
 int load_all_textures(t_game *game, char **files, int num_files);
 int load_game_textures(t_game *game, char **files);
-void draw_element(t_window *data, t_texture *texture, int x, int y);
-void draw_player(t_game *game);
-
+void draw_texture(t_window *data, t_texture *texture, int x, int y);
+void clear_texture(t_window *data, int x, int y);
+void redraw_texture(t_game *game, int x, int y);
 
 #endif

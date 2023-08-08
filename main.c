@@ -4,12 +4,12 @@ int main(int ac, char **av)
 {
     t_game game;
     char *files[NUM_TEXTURES] =
-    {
-        "tiles/greystone.xpm",
-        "tiles/empty.xpm", 
-        "tiles/mossy.xpm", 
+    { 
+        "tiles/wall.xpm",
+        "tiles/empty.xpm",
+         "tiles/item.xpm",
+        "tiles/exit.xpm", 
         "tiles/player.xpm", 
-        "tiles/item.xpm"
     };
 
     // Initialise the game.
@@ -17,10 +17,9 @@ int main(int ac, char **av)
         return (1);
     
     // Setup the hooks.
-    setup_hooks(&game);
+      setup_hooks(&game);
 
     // Start the game loop.
     mlx_loop(game.window.mlx);
     return (0);
-
 }

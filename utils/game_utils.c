@@ -7,12 +7,55 @@ int load_game_map(t_game *game, char *map_path)
     return (0);
 }
 
+
+int init_exit(t_game *game)
+{
+    int i;
+
+    i = 0;
+    while (i < game->map.width * game->map.height)
+    {
+        if (game->map.tiles[i] == TILE_EXIT)
+        {
+            game->exit.x = i % game->map.width;
+            game->exit.y = i / game->map.width;
+            return (0);
+        }
+        i++;
+    }
+    return (handle_error(ERROR_MAP, "No exit in map"));
+}
+
+int init_player(t_game *game)
+{
+    int i;
+
+    i = 0;
+    while (i < game->map.width * game->map.height)
+    {
+        if (game->map.tiles[i] == TILE_PLAYER)
+        {
+            game->player.x = i % game->map.width;
+            game->player.y = i / game->map.width;
+            game->player.collected = 0;
+            return (0);
+        }
+        i++;
+    }
+    return (handle_error(ERROR_MAP, "No player in map"));
+}
+
+
+
+
 int init_game(t_game *game, char **av, int ac, char **files)
 {
-    if (check_args(ac) != 0)
+   if (check_args(ac) != 0)
         return (1);
     init_window(game, WINDOW_WIDTH, WINDOW_HEIGHT , "so_long");
     if (load_game_map(game, av[1]) != 0)
+        return (1);
+     if (init_player(game) != 0)
         return (1);
     if (load_game_textures(game, files) != 0)
         return (1);
@@ -20,3 +63,4 @@ int init_game(t_game *game, char **av, int ac, char **files)
         return (1);
     return (0);
 }
+
