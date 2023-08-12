@@ -1,39 +1,67 @@
 #include "../include/so_long.h"
 
-
-int     ft_close(t_game *game)
+int move_up(t_game *game)
 {
-    ft_free_map(game);
-    ft_free_player(game);
-    ft_free_collectibles(game);
-    ft_free_exits(game);
-    exit(0);
-    return (0);
+    int new_y;
+    int new_x;
+
+    new_x = game->player.x;
+    new_y = game->player.y - 1;
+    if (check_collision(game, new_x, new_y))
+        return 1;
+    update_position(game, new_x, new_y);
+    return 0;
 }
 
-int     ft_exit(t_game *game)
-{
-    ft_free_map(game);
-    ft_free_player(game);
-    ft_free_collectibles(game);
-    ft_free_exits(game);
-    exit(0);
-    return (0);
+int move_down(t_game *game) {
+    int new_y;
+    int new_x;
+
+    new_x = game->player.x;
+    new_y = game->player.y + 1;
+    if (check_collision(game, new_x, new_y))
+        return 1;
+    update_position(game, new_x, new_y);
+    return 0;
 }
 
+int move_left(t_game *game) {
+    int new_y;
+    int new_x;
 
+    new_x = game->player.x - 1;
+    new_y = game->player.y;
+    if (check_collision(game, new_x, new_y))
+        return 1;
+    update_position(game, new_x, new_y);
+    return 0;
+}
 
-int     ft_key_press(int keycode, t_game *game)
+int move_right(t_game *game) {
+    int new_y;
+    int new_x;
+
+    new_x = game->player.x + 1;
+    new_y = game->player.y;
+    if (check_collision(game, new_x, new_y))
+        return 1;
+    update_position(game, new_x, new_y);
+    return 0;
+}   
+
+int handle_key_press(int keycode, t_game *game)
 {
-    if (keycode == KEY_ESC)
-        ft_close(game);
-    else if (keycode == KEY_W)
-        ft_move_up(game);
-    else if (keycode == KEY_A)
-        ft_move_left(game);
-    else if (keycode == KEY_S)
-        ft_move_down(game);
-    else if (keycode == KEY_D)
-        ft_move_right(game);
+    if (keycode == 53)
+        close_window(&game->window, &game->map);
+    if (keycode == 126)
+        move_up(game);
+    if (keycode == 125)
+        move_down(game);
+    if (keycode == 123)
+        move_left(game);
+    if (keycode == 124)
+        move_right(game);
+    game->player.steps++;
+    printf("steps taken: %d\n", game->player.steps);   
     return (0);
 }

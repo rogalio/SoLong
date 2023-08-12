@@ -31,9 +31,6 @@
 # define ERROR_TEXTURE 8
 # define ERROR_OPEN 9
 
-
-
-
 typedef struct s_texture
 {
     void    *img;
@@ -97,9 +94,6 @@ typedef struct s_event
     int keycode;
 }               t_event;
 
-
-
-
 //error
 int handle_error(int code, ...);
 
@@ -109,31 +103,30 @@ void setup_hooks(t_game *game);
 int get_tile_index(t_map *map, int x, int y);
 void init_window(t_game *game, int width, int height, char *title);
 
-//event
-int close_window(t_window *data, t_map *map);
-int move_player(t_game *game, int dx, int dy) ;
+//intputs
 int move_up(t_game *game);
 int move_down(t_game *game);
 int move_left(t_game *game);
 int move_right(t_game *game);
 int handle_key_press(int keycode, t_game *game);
-int check_all_items_gathered(t_game *game);
 
+//event
+int close_window(t_window *data, t_map *map);
+void update_position(t_game *game, int new_x, int new_y);
+int check_all_items_gathered(t_game *game);
 int check_collision(t_game *game, int new_x, int new_y);
 int reveal_exit(t_game *game);
 
 //map utils
 int get_tile_index(t_map *map, int x, int y);
+void setup_hooks(t_game *game);
 int load_map(char *filename, t_game *game);
 int draw_map(t_game *game);
-
-//
 
 //game
 int init_player(t_game *game);
 int init_game(t_game *game, char **av, int ac, char **files);
 int load_game_map(t_game *game, char *map_path);
-
 
 //texture utils
 int load_texture(void *mlx_ptr, char *file, t_texture *tex);

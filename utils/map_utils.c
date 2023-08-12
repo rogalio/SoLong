@@ -20,8 +20,6 @@ int init_map(t_map *map, int width, int height)
     return (0);
 }
 
-
-
 int read_map(int fd, t_map *map)
 {
     char c;
@@ -49,7 +47,6 @@ int read_map(int fd, t_map *map)
     return (0);
 }
 
-
 int load_map(char *filename,t_game *game)
 {
     int fd;
@@ -70,8 +67,6 @@ int load_map(char *filename,t_game *game)
     close(fd);
     return (0);
 }
-
-//  Créer une fonction pour stocker la carte dans une structure de données.
 
 int draw_map(t_game *game)
 {
@@ -97,6 +92,3 @@ int draw_map(t_game *game)
     
     return (0);
 }
-
-
-

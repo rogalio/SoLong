@@ -52,10 +52,6 @@ int init_player(t_game *game)
     return (handle_error(ERROR_MAP, "No player in map"));
 }
 
-
-
-
-
 int init_game(t_game *game, char **av, int ac, char **files)
 {
    if (check_args(ac) != 0)
@@ -74,4 +70,3 @@ int init_game(t_game *game, char **av, int ac, char **files)
     
     return (0);
 }
-
