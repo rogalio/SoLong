@@ -25,6 +25,7 @@ int move_down(t_game *game) {
     return 0;
 }
 
+
 int move_left(t_game *game) {
     int new_y;
     int new_x;
