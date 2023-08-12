@@ -72,6 +72,7 @@ typedef struct s_entity
     int x;
     int y;
     int collected;
+    int steps;
     t_texture   texture;
 }               t_entity;
 
@@ -119,6 +120,7 @@ int handle_key_press(int keycode, t_game *game);
 int check_all_items_gathered(t_game *game);
 
 int check_collision(t_game *game, int new_x, int new_y);
+int reveal_exit(t_game *game);
 
 //map utils
 int get_tile_index(t_map *map, int x, int y);
