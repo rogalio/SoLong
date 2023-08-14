@@ -18,8 +18,39 @@ int get_tile_index(t_map *map, int x, int y)
     return (y * map->width + x);
 }
 
-void init_window(t_game *game, int width, int height, char *title)
-{
-    game->window.mlx = mlx_init();
-    game->window.win = mlx_new_window(game->window.mlx, width, height, title);
+
+
+void init_mlx(t_game *game) {
+  game->window.mlx = mlx_init();
 }
+
+
+void calculate_window_size(t_game *game) 
+{
+    game->window.width = game->map.width * TILE_SIZE;
+    game->window.height = game->map.height * TILE_SIZE;
+    if (game->window.width > WINDOW_MAX_WIDTH)
+        game->window.width = WINDOW_MAX_WIDTH;
+    if (game->window.height > WINDOW_MAX_HEIGHT)
+        game->window.height = WINDOW_MAX_HEIGHT;
+}
+
+void create_window(t_game *game, char *title)
+{
+    game->window.win = mlx_new_window(game->window.mlx, game->window.width, game->window.height, title);
+}
+
+
+void init_window(char *filename, t_game *game, char *title) 
+{
+    init_mlx(game);
+    read_map_size(filename, &game->map);
+    calculate_window_size(game);
+    create_window(game, title);
+}
+
+
+
+
+
+

@@ -55,13 +55,17 @@ int init_player(t_game *game)
 
 int init_game(t_game *game, char **av, int ac, char **files)
 {
+    
+
    if (check_args(ac) != 0)
         return (1);
-    init_window(game, WINDOW_WIDTH, WINDOW_HEIGHT , "so_long");
-    if (load_game_map(game, av[1]) != 0)
+     init_window(av[1], game, "so_long");
+     if (load_game_map(game, av[1]) != 0)
         return (1);
-   if (init_player(game) != 0)
+
+    if (init_player(game) != 0)
       return (1);
+  
     if (init_exit(game) != 0)
        return (1);
     if (load_game_textures(game, files) != 0)

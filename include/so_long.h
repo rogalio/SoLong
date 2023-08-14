@@ -11,14 +11,14 @@
 #include "../mlx_mac/mlx.h"
 #include <stdarg.h>
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1280
+
+# define WINDOW_MAX_WIDTH 1024
+# define WINDOW_MAX_HEIGHT 788
+
 # define MLX_ERROR 1
 # define NUM_TEXTURES 5
 # define MAX_ITEMS 10
 # define TILE_SIZE 64
-//# define MAP_WIDTH 11
-//# define MAP_HEIGHT 11
 
 
 # define ERROR_ARG 1
@@ -54,6 +54,8 @@ typedef struct s_window
 {
     void        *mlx;
     void        *win;
+    int         width;
+    int         height;
     t_texture   texture[NUM_TEXTURES];
 }               t_window;
 
@@ -101,7 +103,7 @@ int handle_error(int code, ...);
 int check_args(int ac);
 void setup_hooks(t_game *game);
 int get_tile_index(t_map *map, int x, int y);
-void init_window(t_game *game, int width, int height, char *title);
+void init_window(char *filename, t_game *game, char *title);
 
 //intputs
 int move_up(t_game *game);
@@ -120,6 +122,7 @@ int reveal_exit(t_game *game);
 //map utils
 int get_tile_index(t_map *map, int x, int y);
 void setup_hooks(t_game *game);
+int read_map_size(char *filename, t_map *map);
 int load_map(char *filename, t_game *game);
 int draw_map(t_game *game);
 

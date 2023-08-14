@@ -42,6 +42,7 @@ int check_all_items_gathered(t_game *game)
     return 0;
 }
 
+
 void update_position(t_game *game, int new_x, int new_y)
 {
     // Set the previous position to empty and clear the texture
