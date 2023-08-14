@@ -25,7 +25,6 @@ int move_down(t_game *game) {
     return 0;
 }
 
-
 int move_left(t_game *game) {
     int new_y;
     int new_x;
@@ -63,6 +62,7 @@ int handle_key_press(int keycode, t_game *game)
     if (keycode == 124)
         move_right(game);
     game->player.steps++;
-    printf("steps taken: %d\n", game->player.steps);   
+    draw_map(game);
+
     return (0);
 }

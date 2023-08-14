@@ -13,7 +13,7 @@
 NAME = so_long
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I./minilibx -g
+CFLAGS = -Wall -Wextra -Werror -I./minilibx  -g
 LFLAGS = -L./mlx_mac -lmlx -framework OpenGL -framework AppKit
 MLX = ./mlx_mac/libmlx.a
 SRCS = main.c handlers/error_handler.c handlers/input_handlers.c handlers/event_handlers.c utils/map_utils.c utils/texture_utils.c utils/utils.c utils/game_utils.c

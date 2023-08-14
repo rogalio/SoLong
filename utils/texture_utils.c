@@ -24,7 +24,6 @@ int load_all_textures(t_game *game, char **files, int num_files)
     return (0);
 }
 
-
 int load_game_textures(t_game *game, char **files)
 {
     if (load_all_textures(game, files, NUM_TEXTURES) != 0)

@@ -7,6 +7,7 @@ int load_game_map(t_game *game, char *map_path)
     return (0);
 }
 
+
 int hide_exit(t_game *game)
 {
     game->map.tiles[get_tile_index(&game->map, game->exit.x, game->exit.y)] = TILE_EMPTY;
@@ -59,14 +60,13 @@ int init_game(t_game *game, char **av, int ac, char **files)
     init_window(game, WINDOW_WIDTH, WINDOW_HEIGHT , "so_long");
     if (load_game_map(game, av[1]) != 0)
         return (1);
-     if (init_player(game) != 0)
-        return (1);
+   if (init_player(game) != 0)
+      return (1);
     if (init_exit(game) != 0)
-        return (1);
+       return (1);
     if (load_game_textures(game, files) != 0)
         return (1);
     if (draw_map(game) != 0)
         return (1);
-    
     return (0);
 }

@@ -11,14 +11,14 @@
 #include "../mlx_mac/mlx.h"
 #include <stdarg.h>
 
-# define WINDOW_WIDTH 640
-# define WINDOW_HEIGHT 640
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1280
 # define MLX_ERROR 1
 # define NUM_TEXTURES 5
 # define MAX_ITEMS 10
 # define TILE_SIZE 64
-# define MAP_WIDTH 11
-# define MAP_HEIGHT 11
+//# define MAP_WIDTH 11
+//# define MAP_HEIGHT 11
 
 
 # define ERROR_ARG 1

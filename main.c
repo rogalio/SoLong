@@ -18,7 +18,7 @@ int main(int ac, char **av)
     
     // Setup the hooks.
       setup_hooks(&game);
-
+    
     // Start the game loop.
     mlx_loop(game.window.mlx);
     return (0);
