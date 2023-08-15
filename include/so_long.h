@@ -20,6 +20,8 @@
 # define MAX_ITEMS 10
 # define TILE_SIZE 64
 
+# define GAME_TITLE "So Long"
+
 
 # define ERROR_ARG 1
 # define ERROR_FILE 2
@@ -70,10 +72,17 @@ typedef struct s_entity
 {
     int x;
     int y;
-    int collected;
+  //  int collected;
     int steps;
     t_texture   texture;
 }               t_entity;
+
+typedef struct s_items
+{
+    t_entity    item[MAX_ITEMS];
+    int         collected;
+    int         total;
+}               t_items;
 
 typedef struct s_error
 {
@@ -86,7 +95,7 @@ typedef struct s_game
     t_window    window;
     t_map       map;
     t_entity    player;
-    t_entity    item;
+    t_items    items[MAX_ITEMS];
     t_entity    exit;
 }               t_game;
 
@@ -100,7 +109,7 @@ typedef struct s_event
 int handle_error(int code, ...);
 
 //utils
-int check_args(int ac);
+int validate_arguments(int ac);
 void setup_hooks(t_game *game);
 int get_tile_index(t_map *map, int x, int y);
 void init_window(char *filename, t_game *game, char *title);
@@ -128,13 +137,11 @@ int draw_map(t_game *game);
 
 //game
 int init_player(t_game *game);
-int init_game(t_game *game, char **av, int ac, char **files);
-int load_game_map(t_game *game, char *map_path);
+int init_game(t_game *game, char *map_path, char **files);
 
 //texture utils
 int load_texture(void *mlx_ptr, char *file, t_texture *tex);
 int load_all_textures(t_game *game, char **files, int num_files);
-int load_game_textures(t_game *game, char **files);
 void draw_texture(t_window *data, t_texture *texture, int x, int y);
 void clear_texture(t_window *data, int x, int y);
 void redraw_texture(t_game *game, int x, int y);

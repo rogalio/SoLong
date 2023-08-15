@@ -24,13 +24,6 @@ int load_all_textures(t_game *game, char **files, int num_files)
     return (0);
 }
 
-int load_game_textures(t_game *game, char **files)
-{
-    if (load_all_textures(game, files, NUM_TEXTURES) != 0)
-        return (1);
-    return (0);
-}
-
 void draw_texture(t_window *data, t_texture *texture, int x, int y)
 {
     mlx_put_image_to_window(data->mlx, data->win, texture->img, x * TILE_SIZE, y * TILE_SIZE);

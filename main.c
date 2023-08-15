@@ -12,15 +12,15 @@ int main(int ac, char **av)
         "tiles/player.xpm", 
     };
 
-    // Initialise the game.
-    if (init_game(&game, av, ac, files) != 0)
+    if (validate_arguments(ac) != 0)
+        return (1);
+
+    if (init_game(&game, av[1], files) != 0)
         return (1);
     
-    // Setup the hooks.
-      setup_hooks(&game);
-    
-    // Start the game loop.
+    setup_hooks(&game);
     mlx_loop(game.window.mlx);
+
     return (0);
 }
 

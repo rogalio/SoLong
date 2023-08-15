@@ -1,6 +1,6 @@
 #include "../include/so_long.h"
 
-int check_args(int ac)
+int validate_arguments(int ac)
 {
     if (ac != 2)
         return (handle_error(ERROR_ARG));

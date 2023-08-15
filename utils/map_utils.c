@@ -81,7 +81,7 @@ int read_map_size(char *filename, t_map *map)
 int load_map(char *filename, t_game *game) 
 {
     int fd;
-
+    
     fd = open_map(filename);
     if (init_map(&game->map) != 0)
         return (1);

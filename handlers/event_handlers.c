@@ -10,9 +10,9 @@ int close_window(t_window *data, t_map *map)
 
 void collect_item(t_game *game)
 {
-    game->player.collected += 1;
+    game->items->collected += 1;
     game->map.tiles[get_tile_index(&game->map, game->player.x, game->player.y)] = TILE_EMPTY;
-    if (game->player.collected == 3)
+    if (game->items->collected == game->items->total)
         reveal_exit(game);
 }
 
@@ -30,18 +30,16 @@ int check_collision(t_game *game, int new_x, int new_y)
     if (game->map.tiles[get_tile_index(&game->map, new_x, new_y)] == TILE_ITEM)
         collect_item(game);
     if (game->map.tiles[get_tile_index(&game->map, new_x, new_y)] == TILE_EXIT && check_all_items_gathered(game))
-        close_window(&game->window, &game->map);
-    
+        close_window(&game->window, &game->map); 
     return 0;
 }
 
 int check_all_items_gathered(t_game *game)
 {
-    if (game->player.collected == 3)
+    if (game->items->collected == game->items->total)
         return 1;
     return 0;
 }
-
 
 void update_position(t_game *game, int new_x, int new_y)
 {

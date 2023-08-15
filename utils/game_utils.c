@@ -1,12 +1,5 @@
 #include "../include/so_long.h"
 
-int load_game_map(t_game *game, char *map_path)
-{
-    if (load_map(map_path, game) != 0)
-        return (1);
-    return (0);
-}
-
 
 int hide_exit(t_game *game)
 {
@@ -44,7 +37,7 @@ int init_player(t_game *game)
         {
             game->player.x = i % game->map.width;
             game->player.y = i / game->map.width;
-            game->player.collected = 0;
+            game->items->collected = 0;
             game->player.steps = 0;
             return (0);
         }
@@ -53,24 +46,43 @@ int init_player(t_game *game)
     return (handle_error(ERROR_MAP, "No player in map"));
 }
 
-int init_game(t_game *game, char **av, int ac, char **files)
+int init_items(t_game *game)
 {
-    
+    int i;
+    int j;
 
-   if (check_args(ac) != 0)
-        return (1);
-     init_window(av[1], game, "so_long");
-     if (load_game_map(game, av[1]) != 0)
-        return (1);
+    i = 0;
+    j = 0;
+    while (i < game->map.width * game->map.height)
+    {
+        if (game->map.tiles[i] == TILE_ITEM)
+        {
+            game->items->item[j].x = i % game->map.width;
+            game->items->item[j].y = i / game->map.width;
+            game->items->total++;
+            j++;
+        }
+        i++;
+    }
+    return (0);
+}
 
+int init_game(t_game *game, char *map_path, char **files)
+{
+    init_window(map_path, game, GAME_TITLE);
+
+    if (load_map(map_path, game) != 0)
+        return (1);
     if (init_player(game) != 0)
       return (1);
-  
+    if (init_items(game) != 0)
+       return (1);
     if (init_exit(game) != 0)
        return (1);
-    if (load_game_textures(game, files) != 0)
+    if (load_all_textures(game, files, NUM_TEXTURES) != 0)
         return (1);
     if (draw_map(game) != 0)
         return (1);
     return (0);
 }
+
