@@ -1,69 +1,39 @@
 #include "../include/so_long.h"
 
-int move_up(t_game *game)
+t_event  *get_key_events(void)
 {
-    int new_y;
-    int new_x;
+    static t_event g_key_events[] = { 
+        { move_player, KEY_UP, DIRECTION_UP},    
+        { move_player, KEY_DOWN, DIRECTION_DOWN},       
+        { move_player, KEY_LEFT, DIRECTION_LEFT},      
+        { move_player, KEY_RIGHT,DIRECTION_RIGHT},     
+        { NULL, 0, DIRECTION_NONE}               
+    };
 
-    new_x = game->player.x;
-    new_y = game->player.y - 1;
-    if (check_collision(game, new_x, new_y))
-        return 1;
-    update_position(game, new_x, new_y);
-    return 0;
+    return g_key_events;
 }
 
-int move_down(t_game *game) {
-    int new_y;
-    int new_x;
+int move_player(t_game *game, t_direction direction) {
+    int new_x = game->player.x + direction.x;
+    int new_y = game->player.y + direction.y;
 
-    new_x = game->player.x;
-    new_y = game->player.y + 1;
     if (check_collision(game, new_x, new_y))
         return 1;
     update_position(game, new_x, new_y);
+    game->player.steps++;
+    printf("Steps: %d\n", game->player.steps);
     return 0;
 }
-
-
-int move_left(t_game *game) {
-    int new_y;
-    int new_x;
-
-    new_x = game->player.x - 1;
-    new_y = game->player.y;
-    if (check_collision(game, new_x, new_y))
-        return 1;
-    update_position(game, new_x, new_y);
-    return 0;
-}
-
-int move_right(t_game *game) {
-    int new_y;
-    int new_x;
-
-    new_x = game->player.x + 1;
-    new_y = game->player.y;
-    if (check_collision(game, new_x, new_y))
-        return 1;
-    update_position(game, new_x, new_y);
-    return 0;
-}   
 
 int handle_key_press(int keycode, t_game *game)
 {
-    if (keycode == 53)
-        close_window(&game->window, &game->map);
-    if (keycode == 126)
-        move_up(game);
-    if (keycode == 125)
-        move_down(game);
-    if (keycode == 123)
-        move_left(game);
-    if (keycode == 124)
-        move_right(game);
-    game->player.steps++;
-    draw_map(game);
+    t_event *event = get_key_events();
 
+    while (event->callback != NULL)
+    {
+        if (keycode == event->keycode)
+            return (event->callback(game, event->direction)); 
+        event++;
+    }
     return (0);
 }

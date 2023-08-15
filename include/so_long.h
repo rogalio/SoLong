@@ -22,6 +22,17 @@
 
 # define GAME_TITLE "So Long"
 
+# define KEY_ESC 53
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+
+# define DIRECTION_UP {-1, 0}
+# define DIRECTION_DOWN {1, 0}
+# define DIRECTION_LEFT {0, -1}
+# define DIRECTION_RIGHT {0, 1}
+# define DIRECTION_NONE {0, 0}
 
 # define ERROR_ARG 1
 # define ERROR_FILE 2
@@ -99,10 +110,20 @@ typedef struct s_game
     t_entity    exit;
 }               t_game;
 
+
+
+// gerer le sevent avec struct ?
+
+typedef struct s_direction
+{
+    int x;
+    int y;
+}               t_direction;
 typedef struct s_event
 {
-    int (*func)(int, t_game *);
+    int (*callback)(t_game *, t_direction);
     int keycode;
+    t_direction direction;
 }               t_event;
 
 //error
@@ -115,11 +136,9 @@ int get_tile_index(t_map *map, int x, int y);
 void init_window(char *filename, t_game *game, char *title);
 
 //intputs
-int move_up(t_game *game);
-int move_down(t_game *game);
-int move_left(t_game *game);
-int move_right(t_game *game);
+int move_player(t_game *game, t_direction direction);
 int handle_key_press(int keycode, t_game *game);
+t_event  *get_key_events(void);
 
 //event
 int close_window(t_window *data, t_map *map);

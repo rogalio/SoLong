@@ -1,6 +1,7 @@
 #include "../include/so_long.h"
 
 
+
 int load_texture(void *mlx_ptr, char *file, t_texture *tex)
 {
     tex->img = mlx_xpm_file_to_image(mlx_ptr, file, &tex->width, &tex->line_length);

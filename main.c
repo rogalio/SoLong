@@ -1,8 +1,10 @@
 #include "./include/so_long.h"
 
+
 int main(int ac, char **av)
 {
     t_game game;
+
     char *files[NUM_TEXTURES] =
     { 
         "tiles/wall.xpm",
@@ -11,7 +13,7 @@ int main(int ac, char **av)
         "tiles/exit.xpm", 
         "tiles/player.xpm", 
     };
-
+    
     if (validate_arguments(ac) != 0)
         return (1);
 
