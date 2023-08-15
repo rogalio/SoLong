@@ -28,10 +28,10 @@
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
 
-# define DIRECTION_UP {-1, 0}
-# define DIRECTION_DOWN {1, 0}
-# define DIRECTION_LEFT {0, -1}
-# define DIRECTION_RIGHT {0, 1}
+# define DIRECTION_UP {0, -1}
+# define DIRECTION_DOWN {0, 1}
+# define DIRECTION_LEFT {-1, 0}
+# define DIRECTION_RIGHT {1, 0}
 # define DIRECTION_NONE {0, 0}
 
 # define ERROR_ARG 1
