@@ -6,7 +6,7 @@ t_event  *get_key_events(void)
         { move_player, KEY_UP, DIRECTION_UP},    
         { move_player, KEY_DOWN, DIRECTION_DOWN},       
         { move_player, KEY_LEFT, DIRECTION_LEFT},      
-        { move_player, KEY_RIGHT,DIRECTION_RIGHT},     
+        { move_player, KEY_RIGHT,DIRECTION_RIGHT},
         { NULL, 0, DIRECTION_NONE}               
     };
 
@@ -33,6 +33,8 @@ int handle_key_press(int keycode, t_game *game)
     {
         if (keycode == event->keycode)
             return (event->callback(game, event->direction)); 
+        if (keycode == KEY_ESC)
+            close_game(game);
         event++;
     }
     return (0);

@@ -23,10 +23,10 @@
 # define GAME_TITLE "So Long"
 
 # define KEY_ESC 53
-# define KEY_UP 126
-# define KEY_DOWN 125
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
+# define KEY_UP 13
+# define KEY_DOWN 1
+# define KEY_LEFT 0
+# define KEY_RIGHT 2
 
 # define DIRECTION_UP {0, -1}
 # define DIRECTION_DOWN {0, 1}
@@ -43,6 +43,7 @@
 # define ERROR_MAP 7
 # define ERROR_TEXTURE 8
 # define ERROR_OPEN 9
+# define ERROR_MAP_CHAR 10
 
 typedef struct s_texture
 {
@@ -146,6 +147,7 @@ void update_position(t_game *game, int new_x, int new_y);
 int check_all_items_gathered(t_game *game);
 int check_collision(t_game *game, int new_x, int new_y);
 int reveal_exit(t_game *game);
+int close_game(t_game *game);
 
 //map utils
 int get_tile_index(t_map *map, int x, int y);
@@ -153,6 +155,7 @@ void setup_hooks(t_game *game);
 int read_map_size(char *filename, t_map *map);
 int load_map(char *filename, t_game *game);
 int draw_map(t_game *game);
+int validate_map(t_map *map);
 
 //game
 int init_player(t_game *game);

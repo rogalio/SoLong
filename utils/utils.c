@@ -49,6 +49,31 @@ void init_window(char *filename, t_game *game, char *title)
     create_window(game, title);
 }
 
+int validate_map_char(char c)
+{
+    if (c == '0' ||
+        c == '1' || 
+        c == '2' || 
+        c == '3' || 
+        c == '4'    
+       )
+        return (0);
+    return (1);
+}
+
+int validate_map(t_map *map)
+{
+    int i;
+
+    i = 0;
+    while (i < map->width * map->height)
+    {
+        if (validate_map_char(map->tiles[i] + '0'))
+            return (handle_error(ERROR_MAP_CHAR));
+        i++;
+    }
+    return (0);
+}
 
 
 

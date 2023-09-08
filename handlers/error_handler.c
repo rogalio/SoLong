@@ -11,11 +11,13 @@ t_error *get_errors(void)
         {ERROR_INIT, "\nError\nCould not initialize window."},
         {ERROR_MAP, "\nError\nCould not load map."},
         {ERROR_TEXTURE, "\nError\nCould not load textures."},
-        {ERROR_OPEN, "\nError\nCould not open file: "},
+        {ERROR_OPEN, "\nError\nCould not open file "},
+        {ERROR_MAP_CHAR, "\nError\nInvalid character in map."},
         {0, ""}
     };
     return (errors);
 }
+
 
 int handle_error(int error_code, ...) {
     va_list args;

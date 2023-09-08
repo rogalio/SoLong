@@ -26,6 +26,7 @@ int init_exit(t_game *game)
     return (handle_error(ERROR_MAP, "No exit in map"));
 }
 
+
 int init_player(t_game *game)
 {
     int i;
@@ -72,6 +73,8 @@ int init_game(t_game *game, char *map_path, char **files)
     init_window(map_path, game, GAME_TITLE);
 
     if (load_map(map_path, game) != 0)
+        return (1);
+    if (validate_map(&game->map) != 0)
         return (1);
     if (init_player(game) != 0)
       return (1);

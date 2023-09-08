@@ -8,6 +8,13 @@ int close_window(t_window *data, t_map *map)
     exit(0);
 }
 
+int close_game(t_game *game) 
+{
+    close_window(&game->window, &game->map);
+    return 0; 
+}
+
+
 void collect_item(t_game *game)
 {
     game->items->collected += 1;
