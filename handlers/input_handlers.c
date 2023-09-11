@@ -13,6 +13,8 @@ t_event  *get_key_events(void)
     return g_key_events;
 }
 
+
+
 int move_player(t_game *game, t_direction direction) {
     int new_x = game->player.x + direction.x;
     int new_y = game->player.y + direction.y;

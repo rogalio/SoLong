@@ -15,6 +15,7 @@ int close_game(t_game *game)
 }
 
 
+
 void collect_item(t_game *game)
 {
     game->items->collected += 1;
