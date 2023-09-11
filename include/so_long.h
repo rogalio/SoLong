@@ -18,7 +18,7 @@
 # define MLX_ERROR 1
 # define NUM_TEXTURES 5
 # define MAX_ITEMS 10
-# define TILE_SIZE 64
+# define TILE_SIZE 32
 
 # define GAME_TITLE "So Long"
 

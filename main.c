@@ -7,11 +7,11 @@ int main(int ac, char **av)
 
     char *files[NUM_TEXTURES] =
     { 
-        "tiles/wall.xpm",
-        "tiles/empty.xpm",
-         "tiles/item.xpm",
-        "tiles/exit.xpm", 
-        "tiles/player.xpm", 
+        "tiles/wallpackman.xpm",
+        "tiles/emptypackman.xpm",
+         "tiles/itempackman.xpm",
+        "tiles/exitpackman.xpm", 
+        "tiles/playerpackman.xpm", 
     };
     
     if (validate_arguments(ac) != 0)
