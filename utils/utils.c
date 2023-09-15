@@ -9,7 +9,7 @@ int validate_arguments(int ac)
 
 void setup_hooks(t_game *game)
 {
-    mlx_hook(game->window.win, 17, 0, close_window, game);
+    mlx_hook(game->window.win, 17, 0, close_game, game);
     mlx_key_hook(game->window.win, handle_key_press, game);
 }
 
@@ -18,14 +18,11 @@ int get_tile_index(t_map *map, int x, int y)
     return (y * map->width + x);
 }
 
-
-
 void init_mlx(t_game *game) {
   game->window.mlx = mlx_init();
 }
 
-
-void calculate_window_size(t_game *game) 
+void calculate_window_size(t_game *game)
 {
     game->window.width = game->map.width * TILE_SIZE;
     game->window.height = game->map.height * TILE_SIZE;
@@ -40,8 +37,7 @@ void create_window(t_game *game, char *title)
     game->window.win = mlx_new_window(game->window.mlx, game->window.width, game->window.height, title);
 }
 
-
-void init_window(char *filename, t_game *game, char *title) 
+void init_window(char *filename, t_game *game, char *title)
 {
     init_mlx(game);
     read_map_size(filename, &game->map);
@@ -51,12 +47,7 @@ void init_window(char *filename, t_game *game, char *title)
 
 int validate_map_char(char c)
 {
-    if (c == '0' ||
-        c == '1' || 
-        c == '2' || 
-        c == '3' || 
-        c == '4'    
-       )
+    if (c>='0' && c<='4')
         return (0);
     return (1);
 }
@@ -74,8 +65,3 @@ int validate_map(t_map *map)
     }
     return (0);
 }
-
-
-
-
-

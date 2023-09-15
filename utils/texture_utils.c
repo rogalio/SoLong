@@ -2,18 +2,17 @@
 
 
 
-int load_texture(void *mlx_ptr, char *file, t_texture *tex)
-{
-    tex->img = mlx_xpm_file_to_image(mlx_ptr, file, &tex->width, &tex->line_length);
-    if (tex->img == NULL)
-        return (handle_error(ERROR_TEXTURE, "Error loading texture"));
-    tex->addr = mlx_get_data_addr(tex->img, &tex->bits_per_pixel, &tex->line_length, &tex->endian);
-    return (0);
-}
-
-int load_all_textures(t_game *game, char **files, int num_files)
+int load_all_textures(t_game *game, int num_files)
 {
     int i;
+    static char *files[NUM_TEXTURES] =
+    {
+        "tiles/wallpackman.xpm",
+        "tiles/emptypackman.xpm",
+         "tiles/itempackman.xpm",
+        "tiles/exitpackman.xpm",
+        "tiles/playerpackman.xpm",
+    };
 
     i = 0;
     while (i < num_files)
@@ -24,6 +23,17 @@ int load_all_textures(t_game *game, char **files, int num_files)
     }
     return (0);
 }
+
+
+int load_texture(void *mlx_ptr, char *file, t_texture *tex)
+{
+    tex->img = mlx_xpm_file_to_image(mlx_ptr, file, &tex->width, &tex->line_length);
+    if (tex->img == NULL)
+        return (handle_error(ERROR_TEXTURE, "Error loading texture"));
+    tex->addr = mlx_get_data_addr(tex->img, &tex->bits_per_pixel, &tex->line_length, &tex->endian);
+    return (0);
+}
+
 
 void draw_texture(t_window *data, t_texture *texture, int x, int y)
 {

@@ -22,28 +22,24 @@ int init_map(t_map *map)
 int read_map(int fd, t_map *map)
 {
     char c;
-    int tile_index = 0;
+    int tile_index;
     ssize_t ret;
 
-    
+    tile_index = 0;
     while ((ret = read(fd, &c, 1)) > 0)
     {
         if (c == '\n') continue; // Ignore newline characters.
         // Convert character to integer and add to the map.
         map->tiles[tile_index] = c - '0';
         tile_index++;
-
     }
-
     if (ret == -1)
     {
         handle_error(ERROR_READ, fd);
         free(map->tiles);
         return (1);
     }
-
     return (0);
-
 }
 
 int read_map_size(char *filename, t_map *map) 
@@ -76,7 +72,6 @@ int read_map_size(char *filename, t_map *map)
     close(fd);
     return 0;
 }
-
 
 int load_map(char *filename, t_game *game) 
 {

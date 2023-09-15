@@ -1,8 +1,6 @@
 #include "../include/so_long.h"
 
-t_error *get_errors(void)
-{
-    static t_error errors[] = {
+const t_error errors[] = {
         {ERROR_ARG, "\nError\nWrong number of arguments.\nUsage: ./so_long <map.ber>"},
         {ERROR_FILE, "\nError\nCould not open file."},
         {ERROR_ALLOC, "\nError\nCould not allocate memory."},
@@ -15,16 +13,11 @@ t_error *get_errors(void)
         {ERROR_MAP_CHAR, "\nError\nInvalid character in map."},
         {0, ""}
     };
-    return (errors);
-}
-
 
 int handle_error(int error_code, ...) {
     va_list args;
-    t_error *errors;
     int i;
 
-    errors = get_errors();
     i = 0;
     while (errors[i].code != 0)
     {
@@ -36,8 +29,11 @@ int handle_error(int error_code, ...) {
         i++;
     }
     va_start(args, error_code);
-    if (error_code == ERROR_ARG)
-        printf("%s\n", va_arg(args, char *));
+    printf("%s\n", va_arg(args, char *));
     va_end(args);
+
+    //  free(map->tiles);
+    // exit(error_code);
+
     return (1);
 }

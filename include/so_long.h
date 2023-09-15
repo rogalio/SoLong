@@ -9,6 +9,7 @@
 #include <stddef.h>
 #include <string.h>
 #include "../mlx_mac/mlx.h"
+//#include "mlx.h"
 #include <stdarg.h>
 
 
@@ -27,6 +28,13 @@
 # define KEY_DOWN 1
 # define KEY_LEFT 0
 # define KEY_RIGHT 2
+
+//# define KEY_ESC 65307
+//# define KEY_UP 65362
+//# define KEY_DOWN 65364
+//# define KEY_LEFT 65361
+//# define KEY_RIGHT 65363
+
 
 # define DIRECTION_UP {0, -1}
 # define DIRECTION_DOWN {0, 1}
@@ -84,14 +92,12 @@ typedef struct s_entity
 {
     int x;
     int y;
-  //  int collected;
     int steps;
     t_texture   texture;
 }               t_entity;
 
 typedef struct s_items
 {
-    t_entity    item[MAX_ITEMS];
     int         collected;
     int         total;
 }               t_items;
@@ -107,13 +113,9 @@ typedef struct s_game
     t_window    window;
     t_map       map;
     t_entity    player;
-    t_items    items[MAX_ITEMS];
+    t_items    items;
     t_entity    exit;
 }               t_game;
-
-
-
-// gerer le sevent avec struct ?
 
 typedef struct s_direction
 {
@@ -159,11 +161,11 @@ int validate_map(t_map *map);
 
 //game
 int init_player(t_game *game);
-int init_game(t_game *game, char *map_path, char **files);
+int init_game(t_game *game, char *map_path);
 
 //texture utils
 int load_texture(void *mlx_ptr, char *file, t_texture *tex);
-int load_all_textures(t_game *game, char **files, int num_files);
+int load_all_textures(t_game *game, int num_files);
 void draw_texture(t_window *data, t_texture *texture, int x, int y);
 void clear_texture(t_window *data, int x, int y);
 void redraw_texture(t_game *game, int x, int y);
