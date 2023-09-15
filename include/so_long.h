@@ -110,6 +110,7 @@ typedef struct s_error
 
 typedef struct s_game
 {
+    int         lut[256];
     t_window    window;
     t_map       map;
     t_entity    player;
@@ -137,6 +138,8 @@ int validate_arguments(int ac);
 void setup_hooks(t_game *game);
 int get_tile_index(t_map *map, int x, int y);
 void init_window(char *filename, t_game *game, char *title);
+void initialize_lut(t_game *game);
+void translate_map(t_game *game);
 
 //intputs
 int move_player(t_game *game, t_direction direction);

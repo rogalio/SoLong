@@ -65,3 +65,23 @@ int validate_map(t_map *map)
     }
     return (0);
 }
+
+void    initialize_lut(t_game *game)
+{
+    game->lut[(unsigned char)'0'] = 1; 
+    game->lut[(unsigned char)'1'] = 0; 
+    game->lut[(unsigned char)'2'] = 2; 
+    game->lut[(unsigned char)'3'] = 'E'; 
+    game->lut[(unsigned char)'4'] = 'P'; 
+}
+
+void translate_map(t_game *game)
+{
+    int idx = 0;
+    
+    while (idx < NUM_TEXTURES ) 
+    {
+        game->map.tiles[idx] = game->lut[(unsigned char)game->map.tiles[idx]];
+        idx++;
+    }
+}
