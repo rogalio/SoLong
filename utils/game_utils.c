@@ -1,5 +1,11 @@
 #include "../include/so_long.h"
 
+int hide_exit(t_game *game)
+{
+    game->map.tiles[get_tile_index(&game->map, game->exit.x, game->exit.y)] = TILE_EMPTY;
+    return (0);
+}
+
 int init_exit(t_game *game)
 {
     int i;
@@ -73,11 +79,5 @@ int init_game(t_game *game, char *map_path)
         return (1);
     if (draw_map(game) != 0)
         return (1);
-    return (0);
-}
-
-int hide_exit(t_game *game)
-{
-    game->map.tiles[get_tile_index(&game->map, game->exit.x, game->exit.y)] = TILE_EMPTY;
     return (0);
 }
