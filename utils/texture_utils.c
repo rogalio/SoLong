@@ -13,12 +13,15 @@ int load_all_textures(t_game *game, int num_files)
         "tiles/exitpackman.xpm",
         "tiles/playerpackman.xpm",
     };
-
     i = 0;
     while (i < num_files)
     {
         if (load_texture(game->window.mlx, files[i], &game->window.texture[i]) != 0)
-            return (1);
+        {
+            printf("Error: Could not load texture %s\n", files[i]);
+            free(game->map.tiles);
+            exit(1);
+        }
         i++;
     }
     return (0);
@@ -29,7 +32,10 @@ int load_texture(void *mlx_ptr, char *file, t_texture *tex)
 {
     tex->img = mlx_xpm_file_to_image(mlx_ptr, file, &tex->width, &tex->line_length);
     if (tex->img == NULL)
-        return (handle_error(ERROR_TEXTURE, "Error loading texture"));
+    {
+        printf("Error: Could not load texture %s\n", file);
+        return (1);
+    }
     tex->addr = mlx_get_data_addr(tex->img, &tex->bits_per_pixel, &tex->line_length, &tex->endian);
     return (0);
 }

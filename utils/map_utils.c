@@ -6,7 +6,9 @@ int open_map(char *filename)
 
     fd = open(filename, O_RDONLY);
     if (fd == -1)
-        return (handle_error(ERROR_OPEN, filename));
+         return (1);
+       // return (handle_error(ERROR_OPEN, filename));
+       
     return (fd);
 }
 
@@ -14,8 +16,11 @@ int init_map(t_map *map)
 {
     map->tiles = malloc(sizeof(t_tile) * map->width * map->height );
     if (map->tiles == NULL)
-        return (handle_error(ERROR_ALLOC, "map->tiles"));
-    
+    {
+        strerror(errno);
+        free(map->tiles);
+        exit(1);
+    }
     return (0);
 }
 
@@ -35,9 +40,8 @@ int read_map(int fd, t_map *map)
     }
     if (ret == -1)
     {
-        handle_error(ERROR_READ, fd);
         free(map->tiles);
-        return (1);
+        exit(1);
     }
     return (0);
 }
@@ -67,7 +71,9 @@ int read_map_size(char *filename, t_map *map)
     if (current_line_width > 0 && current_line_width == map->width)
         map->height++;
     else if (current_line_width > 0 && current_line_width != map->width) 
-        return (handle_error(ERROR_MAP, "Invalid map width"));
+        return (1);
+       //return (handle_error(ERROR_MAP, "Invalid map width"));
+        
     // close the file and return 0 if success
     close(fd);
     return 0;
@@ -78,10 +84,8 @@ int load_map(char *filename, t_game *game)
     int fd;
     
     fd = open_map(filename);
-    if (init_map(&game->map) != 0)
-        return (1);
-    if (read_map(fd, &game->map) != 0)
-        return (1);
+    init_map(&game->map);
+    read_map(fd, &game->map);
     close(fd);
 
     return 0;
@@ -100,12 +104,9 @@ int draw_map(t_game *game)
         while (x < game->map.width)
         {
             tile_index = get_tile_index(&game->map, x, y);
-
             draw_texture(&game->window, &game->window.texture[game->map.tiles[tile_index]], x, y); 
-            printf("%d", game->map.tiles[tile_index]);
             x++;
         }
-        printf("\n");
         y++;
     }
     return (0);

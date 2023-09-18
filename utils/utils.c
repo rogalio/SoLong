@@ -3,9 +3,13 @@
 int validate_arguments(int ac)
 {
     if (ac != 2)
-        return (handle_error(ERROR_ARG));
-    return (0);
+    {
+        printf("Error: Invalid number of arguments");
+        exit(1);
+    }
+    return(0);
 }
+
 
 void setup_hooks(t_game *game)
 {
@@ -52,7 +56,7 @@ int validate_map_char(char c)
     return (1);
 }
 
-int validate_map(t_map *map)
+int check_map(t_map *map)
 {
     int i;
 
@@ -60,7 +64,11 @@ int validate_map(t_map *map)
     while (i < map->width * map->height)
     {
         if (validate_map_char(map->tiles[i] + '0'))
-            return (handle_error(ERROR_MAP_CHAR));
+        {
+            printf("Error: Invalid map character");
+            free(map->tiles);
+            exit(1);
+        }
         i++;
     }
     return (0);

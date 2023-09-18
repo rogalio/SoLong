@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stddef.h>
+#include <stdio.h> 
 #include <string.h>
 #include "../mlx_mac/mlx.h"
 //#include "mlx.h"
@@ -130,9 +131,6 @@ typedef struct s_event
     t_direction direction;
 }               t_event;
 
-//error
-int handle_error(int code, ...);
-
 //utils
 int validate_arguments(int ac);
 void setup_hooks(t_game *game);
@@ -160,7 +158,7 @@ void setup_hooks(t_game *game);
 int read_map_size(char *filename, t_map *map);
 int load_map(char *filename, t_game *game);
 int draw_map(t_game *game);
-int validate_map(t_map *map);
+int check_map(t_map *map);
 
 //game
 int init_player(t_game *game);

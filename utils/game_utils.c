@@ -22,7 +22,9 @@ int init_exit(t_game *game)
         }
         i++;
     }
-    return (handle_error(ERROR_MAP, "No exit in map"));
+    printf("Error: No exit found in map");
+    free(game->map.tiles);
+    exit(1);
 }
 
 int init_player(t_game *game)
@@ -42,7 +44,9 @@ int init_player(t_game *game)
         }
         i++;
     }
-    return (handle_error(ERROR_MAP, "No player in map"));
+    printf("Error: No player found in map");
+    free(game->map.tiles);
+    exit(1);
 }
 
 int init_items(t_game *game)
@@ -65,19 +69,13 @@ int init_game(t_game *game, char *map_path)
     init_window(map_path, game, GAME_TITLE);
     game->map.tiles = NULL;
 
-    if (load_map(map_path, game) != 0)
-        return (1);
-    if (validate_map(&game->map) != 0)
-        return (1);
-    if (init_player(game) != 0)
-      return (1);
-    if (init_items(game) != 0)
-       return (1);
-    if (init_exit(game) != 0)
-       return (1);
-    if (load_all_textures(game, NUM_TEXTURES) != 0)
-        return (1);
-    if (draw_map(game) != 0)
-        return (1);
+    load_map(map_path, game);
+    check_map(&game->map);
+    init_player(game);
+    init_items(game);
+    init_exit(game);
+    load_all_textures(game, NUM_TEXTURES);
+    draw_map(game);
+
     return (0);
 }
