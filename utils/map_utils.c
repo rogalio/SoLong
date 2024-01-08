@@ -6,9 +6,10 @@ int open_map(char *filename)
 
     fd = open(filename, O_RDONLY);
     if (fd == -1)
-         return (1);
-       // return (handle_error(ERROR_OPEN, filename));
-       
+    {
+        write(1, "Error: Map file not found\n", 26);
+        exit(1);
+    }   
     return (fd);
 }
 

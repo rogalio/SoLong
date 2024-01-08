@@ -68,7 +68,6 @@ int init_game(t_game *game, char *map_path)
 {
     init_window(map_path, game, GAME_TITLE);
     game->map.tiles = NULL;
-
     load_map(map_path, game);
     check_map(&game->map);
     init_player(game);
