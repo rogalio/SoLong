@@ -4,7 +4,7 @@ int validate_arguments(int ac)
 {
     if (ac != 2)
     {
-        printf("Error: Invalid number of arguments");
+        write(1, "Error: Invalid number of arguments\n", 35);
         exit(1);
     }
     return(0);
@@ -65,7 +65,7 @@ int check_map(t_map *map)
     {
         if (validate_map_char(map->tiles[i] + '0'))
         {
-            printf("Error: Invalid map character");
+            write(1, "Error: Invalid map character\n", 30);
             free(map->tiles);
             exit(1);
         }
@@ -92,4 +92,30 @@ void translate_map(t_game *game)
         game->map.tiles[idx] = game->lut[(unsigned char)game->map.tiles[idx]];
         idx++;
     }
+}
+
+int ft_putnbr_fd(int n, int fd)
+{
+    char c;
+
+    if (n < 0)
+    {
+        write(fd, "-", 1);
+        n = -n;
+    }
+    if (n > 9)
+        ft_putnbr_fd(n / 10, fd);
+    c = n % 10 + '0';
+    write(fd, &c, 1);
+    return (0);
+}
+
+int ft_strlen(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+        i++;
+    return (i);
 }

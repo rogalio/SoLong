@@ -18,7 +18,8 @@ int load_all_textures(t_game *game, int num_files)
     {
         if (load_texture(game->window.mlx, files[i], &game->window.texture[i]) != 0)
         {
-            printf("Error: Could not load texture %s\n", files[i]);
+            write(1, "Error: Could not load texture\n", 30);
+            write(1, files[i], ft_strlen(files[i]));
             free(game->map.tiles);
             exit(1);
         }
@@ -33,7 +34,8 @@ int load_texture(void *mlx_ptr, char *file, t_texture *tex)
     tex->img = mlx_xpm_file_to_image(mlx_ptr, file, &tex->width, &tex->line_length);
     if (tex->img == NULL)
     {
-        printf("Error: Could not load texture %s\n", file);
+        write(1, "Error: Could not load texture\n", 30);
+        write(1, file, ft_strlen(file));
         return (1);
     }
     tex->addr = mlx_get_data_addr(tex->img, &tex->bits_per_pixel, &tex->line_length, &tex->endian);

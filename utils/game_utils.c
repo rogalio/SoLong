@@ -22,7 +22,7 @@ int init_exit(t_game *game)
         }
         i++;
     }
-    printf("Error: No exit found in map");
+    write(1, "Error: No exit found in map\n", 30);
     free(game->map.tiles);
     exit(1);
 }
@@ -44,7 +44,7 @@ int init_player(t_game *game)
         }
         i++;
     }
-    printf("Error: No player found in map");
+    write(1, "Error: No player found in map\n", 30);
     free(game->map.tiles);
     exit(1);
 }

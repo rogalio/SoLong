@@ -139,6 +139,9 @@ void init_window(char *filename, t_game *game, char *title);
 void initialize_lut(t_game *game);
 void translate_map(t_game *game);
 
+int ft_strlen(char *str);
+int ft_putnbr_fd(int n, int fd);
+
 //intputs
 int move_player(t_game *game, t_direction direction);
 int handle_key_press(int keycode, t_game *game);

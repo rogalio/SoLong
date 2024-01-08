@@ -13,6 +13,7 @@ t_event  *get_key_events(void)
     return g_key_events;
 }
 
+
 int move_player(t_game *game, t_direction direction) {
     int new_x = game->player.x + direction.x;
     int new_y = game->player.y + direction.y;
@@ -21,7 +22,9 @@ int move_player(t_game *game, t_direction direction) {
         return 1;
     update_position(game, new_x, new_y);
     game->player.steps++;
-    printf("Steps: %d\n", game->player.steps);
+    write(1, "Steps: ", 7);
+    ft_putnbr_fd(game->player.steps, 1);
+    write(1, "\n", 1);
     return 0;
 }
 
