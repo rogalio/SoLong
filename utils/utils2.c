@@ -6,7 +6,7 @@
 /*   By: rogalio <rmouchel@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 15:10:10 by rogalio           #+#    #+#             */
-/*   Updated: 2024/01/13 15:18:50 by rogalio          ###   ########.fr       */
+/*   Updated: 2024/01/13 16:13:37 by rogalio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,22 @@
 
 void	initialize_lut(t_game *game)
 {
-	game->lut[(unsigned char) '0'] = 1;
-	game->lut[(unsigned char) '1'] = 0;
-	game->lut[(unsigned char) '2'] = 2;
-	game->lut[(unsigned char) '3'] = 'E';
-	game->lut[(unsigned char) '4'] = 'P';
+	unsigned char	char0;
+	unsigned char	char1;
+	unsigned char	char2;
+	unsigned char	char3;
+	unsigned char	char4;
+
+	char0 = '0';
+	char1 = '1';
+	char2 = '2';
+	char3 = '3';
+	char4 = '4';
+	game->lut[char0] = 1;
+	game->lut[char1] = 0;
+	game->lut[char2] = 2;
+	game->lut[char3] = 'E';
+	game->lut[char4] = 'P';
 }
 
 void	translate_map(t_game *game)
