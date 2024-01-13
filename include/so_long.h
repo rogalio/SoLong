@@ -6,7 +6,7 @@
 /*   By: rogalio <rmouchel@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 11:24:40 by rogalio           #+#    #+#             */
-/*   Updated: 2024/01/11 11:57:31 by rogalio          ###   ########.fr       */
+/*   Updated: 2024/01/13 15:14:10 by rogalio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,6 @@
 # define KEY_DOWN 1
 # define KEY_LEFT 0
 # define KEY_RIGHT 2
-
-# define DIRECTION_UP {0, -1}
-# define DIRECTION_DOWN {0, 1}
-# define DIRECTION_LEFT {-1, 0}
-# define DIRECTION_RIGHT {1, 0}
-# define DIRECTION_NONE {0, 0}
 
 # define ERROR_ARG 1
 # define ERROR_FILE 2
@@ -145,6 +139,8 @@ void	translate_map(t_game *game);
 
 int		ft_strlen(char *str);
 int		ft_putnbr_fd(int n, int fd);
+void	init_mlx(t_game *game);
+void	calculate_window_size(t_game *game);
 
 //intputs
 int		move_player(t_game *game, t_direction direction);
@@ -153,19 +149,25 @@ t_event	*get_key_events(void);
 
 //event
 int		close_window(t_window *data, t_map *map);
-void	update_position(t_game *game, int new_x, int new_y);
-int		check_all_items_gathered(t_game *game);
 int		check_collision(t_game *game, int new_x, int new_y);
 int		reveal_exit(t_game *game);
 int		close_game(t_game *game);
 
+//event 2
+void	update_position(t_game *game, int new_x, int new_y);
+int		check_all_items_gathered(t_game *game);
+
 //map utils
+int		open_map(char *filename);
 int		get_tile_index(t_map *map, int x, int y);
 void	setup_hooks(t_game *game);
 int		read_map_size(char *filename, t_map *map);
 int		load_map(char *filename, t_game *game);
 int		draw_map(t_game *game);
 int		check_map(t_map *map);
+int		update_map_dimensions(char c, int *current_line_width, t_map *map);
+int		check_final_dimensions(int current_line_width, t_map *map);
+int		read_map_size(char *filename, t_map *map);
 
 //game
 int		init_player(t_game *game);

@@ -6,7 +6,7 @@
 /*   By: rogalio <rmouchel@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 17:07:20 by rogalio           #+#    #+#             */
-/*   Updated: 2024/01/12 17:17:26 by rmouchel         ###   ########.fr       */
+/*   Updated: 2024/01/13 14:46:57 by rogalio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 t_event	*get_key_events(void)
 {
 	static t_event	g_key_events[] = {
-	{move_player, KEY_UP, DIRECTION_UP},
-	{move_player, KEY_DOWN, DIRECTION_DOWN},
-	{move_player, KEY_LEFT, DIRECTION_LEFT},
-	{move_player, KEY_RIGHT, DIRECTION_RIGHT},
-	{NULL, 0, DIRECTION_NONE}};
+	{move_player, KEY_UP, {0, -1}},
+	{move_player, KEY_DOWN, {0, 1}},
+	{move_player, KEY_LEFT, {-1, 0}},
+	{move_player, KEY_RIGHT, {1, 0}},
+	{NULL, 0, {0, 0}}};
 
 	return (g_key_events);
 }

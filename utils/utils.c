@@ -6,7 +6,7 @@
 /*   By: rogalio <rmouchel@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:07:33 by rogalio           #+#    #+#             */
-/*   Updated: 2024/01/12 19:19:30 by rmouchel         ###   ########.fr       */
+/*   Updated: 2024/01/13 15:11:42 by rogalio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,90 +46,4 @@ void	calculate_window_size(t_game *game)
 		game->window.width = WINDOW_MAX_WIDTH;
 	if (game->window.height > WINDOW_MAX_HEIGHT)
 		game->window.height = WINDOW_MAX_HEIGHT;
-}
-
-void	create_window(t_game *game, char *title)
-{
-	game->window.win = mlx_new_window(game->window.mlx,
-			game->window.width, game->window.height, title);
-}
-
-void	init_window(char *filename, t_game *game, char *title)
-{
-	init_mlx(game);
-	read_map_size(filename, &game->map);
-	calculate_window_size(game);
-	create_window(game, title);
-}
-
-int	validate_map_char(char c)
-{
-	if (c >= '0' && c <= '4')
-		return (0);
-	return (1);
-}
-
-int	check_map(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->width * map->height)
-	{
-		if (validate_map_char(map->tiles[i] + '0'))
-		{
-			write(1, "Error: Invalid map character\n", 30);
-			free(map->tiles);
-			exit(1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-void	initialize_lut(t_game *game)
-{
-	game->lut[(unsigned char)'0'] = 1;
-	game->lut[(unsigned char)'1'] = 0;
-	game->lut[(unsigned char)'2'] = 2;
-	game->lut[(unsigned char)'3'] = 'E';
-	game->lut[(unsigned char)'4'] = 'P';
-}
-
-void	translate_map(t_game *game)
-{
-	int	idx;
-
-	idx = 0;
-	while (idx < NUM_TEXTURES )
-	{
-		game->map.tiles[idx] = game->lut[(unsigned char)game->map.tiles[idx]];
-		idx++;
-	}
-}
-
-int	ft_putnbr_fd(int n, int fd)
-{
-	char	c;
-
-	if (n < 0)
-	{
-		write(fd, "-", 1);
-		n = -n;
-	}
-	if (n > 9)
-		ft_putnbr_fd(n / 10, fd);
-	c = n % 10 + '0';
-	write(fd, &c, 1);
-	return (0);
-}
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
 }

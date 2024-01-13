@@ -6,7 +6,7 @@
 /*   By: rogalio <rmouchel@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 17:29:51 by rogalio           #+#    #+#             */
-/*   Updated: 2024/01/12 17:49:34 by rmouchel         ###   ########.fr       */
+/*   Updated: 2024/01/13 15:02:28 by rogalio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ int	read_map(int fd, t_map *map)
 	ssize_t	ret;
 
 	tile_index = 0;
-	while ((ret = read(fd, &c, 1)) > 0)
+	ret = 1;
+	while (ret > 0)
 	{
+		ret = read(fd, &c, 1);
 		if (c == '\n')
 			continue ;
 		map->tiles[tile_index] = c - '0';
@@ -57,36 +59,6 @@ int	read_map(int fd, t_map *map)
 		exit(1);
 	}
 	return (0);
-}
-
-int	read_map_size(char *filename, t_map *map)
-{
-	char	c;
-	int		current_line_width;
-	int		fd;
-
-	map->width = 0;
-	map->height = 0;
-	current_line_width = 0;
-	fd = open_map(filename);
-	while (read(fd, &c, 1) > 0)
-	{
-		if (c == '\n')
-		{
-			if (map->width == 0)
-				map->width = current_line_width;
-			current_line_width = 0;
-			map->height++;
-		}
-		else
-            current_line_width++;
-	}
-	if (current_line_width > 0 && current_line_width == map->width)
-		map->height++;
-	else if (current_line_width > 0 && current_line_width != map->width)
-		return (1);
-	close(fd);
-	return 0;
 }
 
 int	load_map(char *filename, t_game *game)
